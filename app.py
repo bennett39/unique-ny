@@ -11,6 +11,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 from models import SubwayLine
+from commands import process_option
 
 
 @app.route('/')
@@ -28,3 +29,10 @@ def add(line_name):
 def list():
     lines = SubwayLine.query.all()
     return ','.join([l.name for l in lines])
+
+@app.route('/data/<option>')
+def options(option):
+    return process_option(option, db)
+
+if __name__ == '__main__':
+    main()
