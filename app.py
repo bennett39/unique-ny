@@ -1,7 +1,7 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 env_config = os.getenv('APP_SETTINGS', 'config.DevelopmentConfig')
@@ -16,19 +16,15 @@ from commands import process_option
 
 @app.route('/')
 def index():
-    return '<p>Hello, World!</p>'
+    return render_template('index.html')
 
-@app.route('/add/<line_name>')
-def add(line_name):
-    line = SubwayLine(name=line_name)
-    db.session.add(line)
-    db.session.commit()
-    return f'Added {line.name}'
+@app.route('/subways')
+def subways():
+    return render_template('subways.html')
 
-@app.route('/list')
-def list():
-    lines = SubwayLine.query.all()
-    return ','.join([l.name for l in lines])
+@app.route('/streets')
+def streets():
+    return render_template('streets.html')
 
 @app.route('/data/<option>')
 def options(option):
