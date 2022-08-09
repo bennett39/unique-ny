@@ -4,5 +4,42 @@
 
 <h1>Subways</h1>
 <p>Run spatial queries against New York's subway system.</p>
+<p>These are some queries I've been playing around with. Eventually, I'd like to turn them into interactive
+forms that you can toggle the subway station/line. Then, fetch the data dynamically with GeoAlchemy.</p>
+
+<h2>What's the GeoJSON representation of the Far Rockaway station?</h2>
+<pre>
+<code>
+SELECT
+ ST_AsGeoJSON(geom, 0)
+FROM subwaystation
+WHERE name = 'Far Rockaway';
+</code>
+</pre>
+
+<h2>What are all the subway stations on the Q train?</h2>
+<pre>
+<code>
+SELECT DISTINCT routes
+FROM subwaystation
+WHERE strpos(subwaystation.routes,'Q') > 0;
+</code>
+</pre>
+
+<h2>How many people live within 200 meters of an L train stop?</h2>
+<pre>
+<code>
+SELECT
+  SUM(popn_total) AS popn_total
+FROM censusblock
+JOIN subwaystation
+  ON ST_DWithin(
+    censusblock.geom,
+    subwaystation.geom,
+    200
+  )
+WHERE strpos(subwaystation.routes,'L') > 0;
+</code>
+</pre>
 
 {% endblock %}

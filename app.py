@@ -26,7 +26,7 @@ def streets():
     return render_template('streets.html')
 
 @app.route('/data/<option>')
-def options(option):
+def data(option):
     return process_option(option, db)
 
 if __name__ == '__main__':

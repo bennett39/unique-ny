@@ -4,5 +4,43 @@
 
 <h1>Streets</h1>
 <p>Run spatial queries against New York's streets.</p>
+<p>These are some queries I've been playing around with. Eventually, I'd like to turn them into interactive
+forms that you can toggle the street/distances. Then, fetch the data dynamically with GeoAlchemy.</p>
+
+<h2>What is the length in kilometers of all streets in NYC?</h2>
+<pre>
+<code>
+SELECT
+  Sum(ST_Length(geom)) / 1000
+FROM street;
+</code>
+</pre>
+
+<h2>How far apart are W 14th Street and Columbus Circle?</h2>
+<pre>
+<code>
+SELECT ST_Distance(a.geom, b.geom)
+FROM street a,
+     street b
+WHERE a.name = 'W 14th St'
+  AND b.name = 'Columbus Cir';
+</code>
+</pre>
+
+<h2>Find the nearest street to each subway station</h2>
+<pre>
+<code>
+SELECT
+  street.id AS street_id,
+  subwaystation.id AS subway_id,
+  ST_Distance(street.geom, subwaystation.geom) AS distance,
+  ST_GeometryN(street.geom,1) AS streets_geom,
+  subwaystation.geom AS subway_geom
+FROM street
+JOIN subwaystation
+  ON ST_DWithin(street.geom, subwaystation.geom, 200)
+ORDER BY subway_id, distance ASC
+</code>
+</pre>
 
 {% endblock %}

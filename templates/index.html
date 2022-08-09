@@ -5,4 +5,16 @@
 <h1>Home</h1>
 <p>Unique New York is an exploration of NYC's geography and demographics.</p>
 
+<h2>Populate the database</h2>
+<p>There are better ways to load data into the database, but this is the quick-n-dirty version.</p>
+<p>Once you've run the data load once, these routes will stop working with "Data already exists for this
+model!"</p>
+
+<ul>
+    <li>Visit <a href="{{ url_for('data', option='streets') }}">streets</a></li>
+    <li>Visit <a href="{{ url_for('data', option='blocks') }}">blocks</a></li>
+    <li>Visit <a href="{{ url_for('data', option='stations') }}">stations</a></li>
+</ul>
+
+
 {% endblock %}
