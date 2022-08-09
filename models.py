@@ -3,12 +3,6 @@ from sqlalchemy.dialects.postgresql import JSON
 from geoalchemy2 import Geometry
 
 
-class SubwayLine(db.Model):
-    __tablename__ = 'subwayline'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(140), nullable=False)
-
 class SubwayStation(db.Model):
     __tablename__ = 'subwaystation'
 
