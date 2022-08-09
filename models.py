@@ -7,13 +7,14 @@ class SubwayLine(db.Model):
     __tablename__ = 'subwayline'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
+    name = db.Column(db.String(140), nullable=False)
 
 class SubwayStation(db.Model):
     __tablename__ = 'subwaystation'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
+    routes = db.Column(db.String(140), nullable=False)
     geom = db.Column(Geometry('POINT', srid=26918))
 
 class Street(db.Model):
@@ -29,6 +30,7 @@ class CensusBlock(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     block_id = db.Column(db.String(255), unique=True, nullable=False)
     geom = db.Column(Geometry('MULTIPOLYGON', srid=26918))
+    boroname = db.Column(db.String(140), nullable=False)
     popn_total = db.Column(db.Integer)
     popn_white = db.Column(db.Integer)
     popn_black = db.Column(db.Integer)
